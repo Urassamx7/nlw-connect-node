@@ -6,12 +6,16 @@ import { validatorCompiler, serializerCompiler, type ZodTypeProvider, jsonSchema
 import { subscribeToEventRoute } from './routes/subscribe-to-event-route'
 import { env } from './utils/env'
 import { accessInviteLinkRoute } from './routes/access-invite-link'
+import { getSubscriberInviteLinkRoute } from './routes/get-subscriber-invite-clicks-route'
+import { getSubscriberInviteCountsRoute } from './routes/get-subscriber-invite-counts-route'
+import { getSubscriberRankingPositionRoute } from './routes/get-subscriber-ranking-position-route'
+import { getRankingRoute } from './routes/get-ranking-route'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
 //Server Configuration
 app.register(fastifyCors, {
-    origin: true,
+    origin: '*',
 })
 app.register(fastifySwagger, {
     openapi: {
@@ -31,6 +35,10 @@ app.setValidatorCompiler(validatorCompiler)
 //Routes
 app.register(subscribeToEventRoute)
 app.register(accessInviteLinkRoute)
+app.register(getSubscriberInviteLinkRoute)
+app.register(getSubscriberInviteCountsRoute)
+app.register(getSubscriberRankingPositionRoute)
+app.register(getRankingRoute)
 
 
 app.listen({
